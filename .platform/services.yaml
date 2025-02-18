@@ -1,4 +1,3 @@
-
 # The name given to the MariaDB/MySQL service (lowercase alphanumeric only).
 mariadb:10.11.2
     # The type of your service (mariadb), which uses the format
@@ -6,7 +5,12 @@ mariadb:10.11.2
     # (https://docs.platform.sh/add-services/mysql.html#supported-versions)
     # when choosing a version. If you specify a version number which is not available,
     # the CLI will return an error.
-    type: mariadb:11.4
+    type: mariadb:10.5
     # The disk attribute is the size of the persistent disk (in MB) allocated to the service.
-    disk: 256
+    disk: 2048
+
+phpmyadmin:
+    type: phpmyadmin
+    relationships:
+        database: "db:mariadb"
 
