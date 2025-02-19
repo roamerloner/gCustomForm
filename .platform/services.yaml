@@ -1,6 +1,6 @@
 # The name given to the MariaDB/MySQL service (lowercase alphanumeric only).
 mariadb:
-    type: mariadb:10.11.2
+    type: mariadb:11.4
     # The type of your service (mariadb), which uses the format
     # 'type:version'. Be sure to consult the MariaDB/MySQL documentation
     # (https://docs.platform.sh/add-services/mysql.html#supported-versions)
