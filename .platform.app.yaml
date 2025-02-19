@@ -36,6 +36,8 @@ mounts:
     "/var/cache": { source: local, source_path: var/cache }
     
 
+relationships:
+    database: "mariadb:db"
 
 hooks:
     build: |
