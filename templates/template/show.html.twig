@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ template.title }}{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6 max-w-3xl bg-gray-900 text-white">
+        <h1 class="text-3xl font-bold mb-6">{{ template.title }}</h1>
+        <div class="prose text-gray-300 mb-6">{{ template.description }}</div>
+
+        <div class="space-y-4">
+            <p><strong>Topic:</strong> {{ template.topic ? template.topic.name : 'None' }}</p>
+            <p><strong>Public:</strong> {{ template.isPublic ? 'Yes' : 'No' }}</p>
+            <p><strong>Tags:</strong> {{ template.tags|join(', ') ?: 'None' }}</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-4">Custom Fields</h3>
+            <ul class="space-y-4">
+                {% for question in template.questions %}
+                    <li class="p-4 bg-gray-800 border border-gray-700 rounded-md shadow-sm">
+                        <div class="space-y-2">
+                            <p class="font-medium">{{ question.title }}</p>
+                            <p class="text-gray-400">{{ question.description }}</p>
+                            <p><strong>Type:</strong> {{ question.type|capitalize }}</p>
+                            <p><strong>Show in Response Table:</strong> {{ question.displayInTable ? 'Yes' : 'No' }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <a href="{{ path('template_fill', {'id': template.id}) }}" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-200">Fill Out Form</a>
+
+            <a href="{{ path('app_create_template', {'id': template.id}) }}" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-200">Create Form Template</a>
+        </div>
+    </div>
+{% endblock %}

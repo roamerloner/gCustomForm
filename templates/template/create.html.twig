@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Template{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6 max-w-3xl bg-gray-900 text-white">
+        <h1 class="text-3xl font-bold mb-6">Create a New Template</h1>
+
+        {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+            
+            <div>
+                {{ form_label(form.title, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.description, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 h-32 text-gray-900'}}) }}
+            </div>
+
+            <div>
+                {{ form_label(form.topic, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                {{ form_widget(form.topic, {'attr': {'class': 'mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900'}}) }}
+            </div>
+
+            {# Questions #}
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-white mb-4">Custom Fields</h3>
+                <ul id="questions-fields-list" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}" class="space-y-4">
+                    {% for questionField in form.questions %}
+                        <li class="p-4 bg-gray-800 border border-gray-700 rounded-md shadow-sm">
+                            <div class="space-y-3">
+                                {{ form_label(questionField.title, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                                {{ form_widget(questionField.title, {'attr': {'class': 'block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900'}}) }}
+
+                                {{ form_label(questionField.description, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                                {{ form_widget(questionField.description, {'attr': {'class': 'block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 h-20 text-gray-900'}}) }}
+
+                                {{ form_label(questionField.type, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                                {{ form_widget(questionField.type, {'attr': {'class': 'block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500'}}) }}
+
+                                {% if questionField.options is defined %}
+                                    {{ form_label(questionField.options, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                                    {{ form_widget(questionField.options, {'attr': {'class': 'block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 h-20 text-gray-900'}}) }}
+                                {% endif %}
+
+                                <div class="flex items-center">
+                                    {{ form_widget(questionField.displayInTable, {'attr': {'class': 'h-5 w-5 text-indigo-600 border-gray-300 rounded'}}) }}
+                                    {{ form_label(questionField.displayInTable, null, {'label_attr': {'class': 'ml-2 text-sm font-medium text-white'}}) }}
+                                </div>
+
+                                <button type="button" class="delete-question bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200">Delete</button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="button" id="add-question" class="mt-4 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition duration-200">Add Custom Field</button>
+            </div>
+            
+            <div>
+                {{ form_label(form.tags, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                {{ form_widget(form.tags, {'attr': {'class': 'mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900'}}) }}
+            </div>
+
+            <div>
+                <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition duration-200">Create Form Template</button>
+            </div>
+
+              <div class="flex items-center">
+                {{ form_widget(form.isPublic, {'attr': {'class': 'h-5 w-5 text-indigo-600 border-gray-300 rounded'}}) }}
+                {{ form_label(form.isPublic, null, {'label_attr': {'class': 'ml-2 text-sm font-medium text-white'}}) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+    <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"><a class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent" href="{{ path('homepage') }}"> ← Main Page</a></button>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addQuestionButton = document.getElementById('add-question');
+            const questionsList = document.getElementById('questions-fields-list');
+
+            addQuestionButton.addEventListener('click', function() {
+                const prototype = questionsList.dataset.prototype;
+                const newIndex = questionsList.children.length;
+                const newForm = prototype.replace(/__name__/g, newIndex);
+
+                const li = document.createElement('li');
+                li.className = 'p-4 bg-gray-800 border border-gray-700 rounded-md shadow-sm';
+                li.innerHTML = `
+                    <div class="space-y-3">
+                        ${newForm}
+                        <button type="button" class="delete-question bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200">Delete</button>
+                    </div>
+                `;
+                questionsList.appendChild(li);
+                styleNewFields(li);
+                attachDeleteListeners();
+            });
+
+            function styleNewFields(container) {
+                const inputs = container.querySelectorAll('input[type="text"], textarea, select');
+                inputs.forEach(input => {
+                    input.className = 'block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900';
+                    if (input.tagName === 'TEXTAREA') input.classList.add('h-20');
+                });
+
+                const checkbox = container.querySelector('input[type="checkbox"]');
+                if (checkbox) checkbox.className = 'h-5 w-5 text-indigo-600 border-gray-300 rounded';
+
+                const labels = container.querySelectorAll('label');
+                labels.forEach(label => {
+                    label.className = 'block text-sm font-medium text-white';
+                });
+
+                const showInTableDiv = container.querySelector('input[type="checkbox"]')?.parentElement;
+                if (showInTableDiv) showInTableDiv.className = 'flex items-center';
+
+                // Update or add the "Options" field based on the type
+                const typeSelect = container.querySelector('select[name$="[type]"]');
+                if (typeSelect) {
+                    updateOptionsField(container, typeSelect.value);
+                    typeSelect.addEventListener('change', function(e) {
+                        updateOptionsField(container, e.target.value);
+                    });
+                }
+            }
+
+            function updateOptionsField(container, type) {
+                const optionsDiv = container.querySelector('.options-field');
+                if (optionsDiv) optionsDiv.remove();
+
+                if (['multiple_choice', 'dropdown'].includes(type)) {
+                    const optionsLabel = document.createElement('label');
+                    optionsLabel.className = 'block text-sm font-medium text-white';
+                    optionsLabel.textContent = 'Options (comma-separated)';
+
+                    const optionsInput = document.createElement('textarea');
+                    optionsInput.className = 'block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 h-20 text-gray-900';
+                    optionsInput.name = `questions[${container.querySelector('input, select, textarea').name.replace(/\[title\]$/, '[options]')}]`;
+
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'options-field mt-2';
+                    optionsDiv.appendChild(optionsLabel);
+                    optionsDiv.appendChild(optionsInput);
+
+                    container.querySelector('div.space-y-3').appendChild(optionsDiv);
+                }
+            }
+
+            function attachDeleteListeners() {
+                document.querySelectorAll('.delete-question').forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.parentElement.parentElement.remove();
+                    });
+                });
+            }
+            attachDeleteListeners();
+
+            document.querySelectorAll('#questions-fields-list li').forEach(styleNewFields);
+        });
+    </script>
+{% endblock %}
