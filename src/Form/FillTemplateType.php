@@ -58,6 +58,6 @@ class FillTemplateType extends AbstractType
     {
         $resolver->setRequired('template');
         $resolver->setAllowedTypes('template', Template::class);
-        $resolver->setDefaults(['data_class' => null]); // Ensure no binding to Template
+        $resolver->setDefaults(['data_class' => null]); 
     }
 }

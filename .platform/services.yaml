@@ -7,6 +7,6 @@ mariadb:
     # when choosing a version. If you specify a version number which is not available,
     # the CLI will return an error.
     # The disk attribute is the size of the persistent disk (in MB) allocated to the service.
-    disk: 2048
+    disk: 256
 
 

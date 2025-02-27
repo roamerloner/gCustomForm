@@ -37,26 +37,26 @@ class QuestionType extends AbstractType
             ->add('options', TextareaType::class, [
                 'label' => 'Options (comma-separated)',
                 'required' => false,
-                'mapped' => false, // Don’t map to the entity by default; we’ll handle it conditionally
+                'mapped' => false,
             ])
             ->add('displayInTable', CheckboxType::class, [
                 'label' => 'Show in response table',
                 'required' => false,
             ]);
 
-        // Use FormEvents to dynamically add/remove the options field
+        
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $question = $event->getData();
             $form = $event->getForm();
 
-            // Remove or add the options field based on the type
+            
             if ($question && !in_array($question->getType(), ['multiple_choice', 'dropdown'])) {
                 $form->remove('options');
             } elseif ($question && in_array($question->getType(), ['multiple_choice', 'dropdown'])) {
                 $form->add('options', TextareaType::class, [
                     'label' => 'Options (comma-separated)',
                     'required' => false,
-                    'mapped' => true, // Map to the entity now that we know it’s needed
+                    'mapped' => true, 
                 ]);
             }
         });
@@ -65,7 +65,7 @@ class QuestionType extends AbstractType
             $data = $event->getData();
             $form = $event->getForm();
 
-            // Remove or add the options field based on the submitted type
+            
             if (isset($data['type']) && !in_array($data['type'], ['multiple_choice', 'dropdown'])) {
                 $form->remove('options');
             } elseif (isset($data['type']) && in_array($data['type'], ['multiple_choice', 'dropdown'])) {

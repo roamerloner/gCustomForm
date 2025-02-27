@@ -67,7 +67,7 @@ class Topic
     public function removeTemplate(Template $template): static
     {
         if ($this->templates->removeElement($template)) {
-            // set the owning side to null (unless already changed)
+            
             if ($template->getTopic() === $this) {
                 $template->setTopic(null);
             }
