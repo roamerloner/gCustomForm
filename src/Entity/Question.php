@@ -27,8 +27,8 @@ class Question
     #[ORM\Column(length: 255, nullable:true)]
     private ?string $title;
 
-    #[ORM\Column(type: Types::TEXT, nullable:true)]
-    private ?string $description = null;
+    // #[ORM\Column(type: Types::TEXT, nullable:true)]
+    // private ?string $description = null;
 
     #[Assert\NotBlank(groups: ['multiple_choice', 'dropdown'])]
     #[ORM\Column(type: 'text', nullable: true)]
@@ -36,7 +36,7 @@ class Question
 
     #[ORM\Column]
     private ?bool $displayInTable = null;
-
+ 
     #[ORM\Column]
     private ?int $position = 0;
 
@@ -93,17 +93,17 @@ class Question
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
+    // public function getDescription(): ?string
+    // {
+    //     return $this->description;
+    // }
 
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
+    // public function setDescription(string $description): static
+    // {
+    //     $this->description = $description;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function isDisplayInTable(): ?bool
     {

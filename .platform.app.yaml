@@ -32,12 +32,12 @@ web:
             expires: 1h
             passthru: "/index.php"
 
-# mounts:
-#     "/var/cache": { source: local, source_path: var/cache }
 mounts:
-'web/uploads':
-source: local
-source_path: uploads    
+    "/var/cache": { source: local, source_path: var/cache }
+# mounts:
+#     'web/uploads':
+#     source: local
+#     source_path: uploads    
 
 relationships:
     database: "mariadb:database"

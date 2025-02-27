@@ -21,7 +21,7 @@ class Tag
     /**
      * @var Collection<int, Template>
      */
-    #[ORM\ManyToMany(targetEntity: Template::class)]
+    #[ORM\ManyToMany(targetEntity: Template::class, mappedBy: 'tags')]
     private Collection $templates;
 
     public function __construct()

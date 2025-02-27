@@ -21,21 +21,24 @@ class QuestionType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
+                'label' => 'Questions',
                 'required' => false
             ])
-            ->add('description', TextareaType::class)
             ->add('type', ChoiceType::class, [
                 'choices' => [
                     'Single-line String' => 'single_line',
                     'Multiple-line Text' => 'multi_line',
-                    'Positive Integer' => 'positive_integer',
-                    'Checkbox' => 'checkbox',
+                    // 'Positive Integer' => 'positive_integer',
+                    // 'Checkbox' => 'checkbox',
                     'Multiple Choice' => 'multiple_choice',
-                    'Dropdown' => 'dropdown',
                 ],
             ])
+            // ->add('description', TextareaType::class,[
+            //     'label' => 'Options',
+            //     'required' => false
+            // ])
             ->add('options', TextareaType::class, [
-                'label' => 'Options (comma-separated)',
+                'label' => 'Options',
                 'required' => false,
                 'mapped' => false,
             ])
