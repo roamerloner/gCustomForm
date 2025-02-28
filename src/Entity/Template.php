@@ -66,17 +66,17 @@ class Template
         $this->responses = new ArrayCollection();
     }
 
-    #[ORM\PrePersist]
-    public function setCreatedAt(): void
-    {
-        $this->createdAt = new \DateTime();
-    }
+    // #[ORM\PrePersist]
+    // public function setCreatedAt(): void
+    // {
+    //     $this->createdAt = new \DateTime();
+    // }
 
-    #[ORM\PreUpdate]
-    public function setUpdatedAt(): void
-    {
-        $this->updatedAt = new \DateTime();
-    }
+    // #[ORM\PreUpdate]
+    // public function setUpdatedAt(): void
+    // {
+    //     $this->updatedAt = new \DateTime();
+    // }
 
     public function getId(): ?int
     {
@@ -131,29 +131,29 @@ class Template
         return $this;
     }
 
-    // public function getCreatedAt(): ?\DateTimeImmutable
-    // {
-    //     return $this->createdAt;
-    // }
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
 
-    // public function setCreatedAt(?\DateTimeInterface $createdAt): self
-    // {
-    //     $this->createdAt = $createdAt;
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function getUpdatedAt(): ?\DateTimeImmutable
-    // {
-    //     return $this->updatedAt;
-    // }
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
 
-    // public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    // {
-    //     $this->updatedAt = $updatedAt;
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getTopic(): ?Topic
     {
@@ -188,7 +188,6 @@ class Template
     public function removeQuestion(Question $question): static
     {
         if ($this->questions->removeElement($question)) {
-            // set the owning side to null (unless already changed)
             if ($question->getTemplate() === $this) {
                 $question->setTemplate(null);
             }
@@ -242,7 +241,6 @@ class Template
     public function removeResponse(Response $response): static
     {
         if ($this->responses->removeElement($response)) {
-            // set the owning side to null (unless already changed)
             if ($response->getTemplate() === $this) {
                 $response->setTemplate(null);
             }

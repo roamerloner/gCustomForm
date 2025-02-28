@@ -28,15 +28,9 @@ class QuestionType extends AbstractType
                 'choices' => [
                     'Single-line String' => 'single_line',
                     'Multiple-line Text' => 'multi_line',
-                    // 'Positive Integer' => 'positive_integer',
-                    // 'Checkbox' => 'checkbox',
                     'Multiple Choice' => 'multiple_choice',
                 ],
             ])
-            // ->add('description', TextareaType::class,[
-            //     'label' => 'Options',
-            //     'required' => false
-            // ])
             ->add('options', TextareaType::class, [
                 'label' => 'Options',
                 'required' => false,

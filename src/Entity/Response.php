@@ -84,7 +84,6 @@ class Response
     public function removeAnswer(Answer $answer): static
     {
         if ($this->answers->removeElement($answer)) {
-            // set the owning side to null (unless already changed)
             if ($answer->getResponse() === $this) {
                 $answer->setResponse(null);
             }

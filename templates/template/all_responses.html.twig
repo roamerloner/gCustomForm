@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Responses{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6 max-w-3xl bg-gray-900 text-white">
+        <h1 class="text-3xl font-bold mb-6">All Responses</h1>
+        {% if responses is empty %}
+            <p class="text-gray-400">No responses available yet.</p>
+        {% else %}
+            <table class="w-full border-collapse border">
+                <thead>
+                    <tr class="bg-gray-800">
+                        <th class="border p-2">Submitted At</th>
+                        <th class="border p-2">Template</th>
+                         <th class="border p-2">Question</th>
+                        <th class="border p-2">Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for response in responses %}
+                        {% for answer in response.answers %}
+                            <tr>
+                                <td class="border p-2">{{ response.submittedAt|date('Y-m-d H:i:s') }}</td>
+                                <td class="border p-2">{{ response.template.title }}</td>
+                                <td class="border p-2">{{ answer.question.questionText|default(answer.question.title)|default('N/A') }}</td>
+                                <td class="border p-2">{{ answer.answerText }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+    <div class="mt-4">
+            <a href="{{ path('homepage') }}" class="text-blue-600 hover:underline">Return to Main Page</a>
+        </div>
+{% endblock %}

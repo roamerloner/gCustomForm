@@ -60,9 +60,7 @@ final class TemplateController extends AbstractController
                     }
                     $template->addTag($tag);
                 }
-            }
-
-            
+            } 
             $questionCounts = [
                 'single_line' => 0,
                 'multi_line' => 0,
@@ -116,7 +114,6 @@ final class TemplateController extends AbstractController
                 if ($form->isSubmitted() && $form->isValid()) {
                     $response = new Response();
                     $response->setTemplate($template);
-                    // $response->setUser('Anonymous'); // Replace with authenticated user logic later
                     $response->setSubmittedAt(new \DateTime());
 
                     $data = $form->getData(); 
@@ -169,6 +166,20 @@ final class TemplateController extends AbstractController
                     'template' => $template,
                     'responses' => $responses,
                     'questionsToShow' => $questionsToShow,
+                ]);
+            }
+
+            #[Route('/responses/all', name: 'all_responses', methods: ['GET'])]
+            public function allResponses(): HttpResponse
+            {
+                $responses = $this->em->getRepository(Response::class)
+                    ->createQueryBuilder('r')
+                    ->orderBy('r.submittedAt', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+        
+                return $this->render('template/all_responses.html.twig', [
+                    'responses' => $responses,
                 ]);
             }
             
